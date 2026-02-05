@@ -1,14 +1,6 @@
 class Animal:
     alive: list["Animal"] = []
 
-    @classmethod
-    def alive_logic(cls) -> list["Animal"]:
-        Animal.alive = [
-            obj for obj in Animal.alive
-            if obj.health > 0
-        ]
-        return Animal.alive
-
     def __init__(
             self,
             name: str,
@@ -37,5 +29,5 @@ class Carnivore(Animal):
     def bite(self, obj: Animal) -> None:
         if isinstance(obj, Herbivore) and obj.hidden is False:
             obj.health -= 50
-
-        self.alive_logic()
+            if obj.health <= 0:
+                Animal.alive.remove(obj)
